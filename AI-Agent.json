@@ -1,0 +1,134 @@
+{
+  "name": "AI-Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8403f718-03e6-47bf-a541-3a8a950b11e0",
+      "name": "When chat message received",
+      "webhookId": "c3de5d23-b6db-4bdd-9edf-b26923b73d41"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e25a5e0b-90ad-4949-bd81-58fdd534808f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "a514bbd6-54d0-4f42-9fae-add337f71d34",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "21bAL5AgYQw9yP3D",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        464,
+        176
+      ],
+      "id": "7727c521-bbca-4d9d-9106-b00adc3c185b",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        352,
+        272
+      ],
+      "id": "3d6b779a-7e7f-4b0a-b1ad-74f15d804bf9",
+      "name": "Wikipedia"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "faf12be0-d212-467b-acba-6368d7f248f2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4cc78f65ee9932f2a943e8f1b6587839d35c499a44c40d7d54716c5731b63a22"
+  },
+  "id": "QbYyGkyWzHQnKKsb",
+  "tags": []
+}
