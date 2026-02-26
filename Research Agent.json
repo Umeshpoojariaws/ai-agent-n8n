@@ -1,0 +1,171 @@
+{
+  "name": "Research Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Viyansh. How can I assist you today?",
+        "availableInChat": true,
+        "agentName": "Viyansh",
+        "agentDescription": "Research Agent",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "50277c74-8dfa-4054-b81b-66c8b83c2a9c",
+      "name": "When chat message received",
+      "webhookId": "4ce8a570-604e-44a4-bd51-4381f5fe42e3"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistantYou are an expert research assistant. When given a topic:\n\n1. Search the web for the latest information using SerpAPI\n2. Also search Wikipedia for background context\n3. Analyze and synthesize all information found\n4. Write a structured research report with these sections:\n   - Summary (3-4 sentences overview)\n   - Key Findings (5 bullet points)\n   - Latest Developments (what's new/recent)\n   - Conclusion (your analysis)\n\nAlways cite where you found information.\nBe thorough, accurate, and professional."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "b0b3126c-6d37-454b-8ee4-da73e6c13ce0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        528,
+        160
+      ],
+      "id": "b7e3dac1-c920-4a85-a0a1-ab134ae5f734",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "XoA6bJ6tNyOHIw1c",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWikipedia",
+      "typeVersion": 1,
+      "position": [
+        464,
+        304
+      ],
+      "id": "600c2bc3-53ed-499e-9b01-2e1ac79cf8d1",
+      "name": "Wikipedia"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        352,
+        240
+      ],
+      "id": "7fa089eb-83b7-4354-83d1-d3970571ab16",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "5cec3db3-902c-400e-9f61-1ad850b51d8d",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "21bAL5AgYQw9yP3D",
+          "name": "Groq account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wikipedia": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "51999b7b-e3e4-4e4d-b37a-f1ba8651e73c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4cc78f65ee9932f2a943e8f1b6587839d35c499a44c40d7d54716c5731b63a22"
+  },
+  "id": "rNa1kM10vbPQujwK",
+  "tags": []
+}
